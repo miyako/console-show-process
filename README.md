@@ -1,5 +1,4 @@
 # console-show-process
-Show process window
 
 ```
 Usage: show-process -p process {-s option}
