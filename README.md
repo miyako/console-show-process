@@ -2,7 +2,7 @@
 Show process window
 
 ```
-Usage: show-process -p process {-s show-option}
+Usage: show-process -p process {-s option}
 ```
 
 Show every non-owned window of a process.
