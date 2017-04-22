@@ -2,14 +2,14 @@
 Show process window
 
 ```
-Usage: show-process -p process -s show-option
+Usage: show-process -p process {-s show-option}
 ```
 
 Show every non-owned window of a process.
 
 ```
  -p process: process id
- -s timeout: what to do with the window (default=SW_SHOWNORMAL:1)
+ -s option: what to do with the window (default=SW_SHOWNORMAL:1)
  SW_HIDE:0
  SW_SHOWNORMAL:1
  SW_SHOWMINIMIZED:2
