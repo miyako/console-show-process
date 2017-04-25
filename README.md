@@ -31,5 +31,6 @@ Show every non-owned window of a process.
 
 If PID matches, [GetWindow](https://msdn.microsoft.com/en-us/library/windows/desktop/ms633515(v=vs.85).aspx) is used to filter any [owned windows](https://msdn.microsoft.com/en-us/library/windows/desktop/ms632599(v=vs.85).aspx#owned_windows).
 
-If window is not owned, [GetGUIThreadInfo](https://msdn.microsoft.com/en-us/library/windows/desktop/ms633506(v=vs.85).aspx) is used to filter non-GUI windows.
+If window is not owned, [GetGUIThreadInfo](https://msdn.microsoft.com/en-us/library/windows/desktop/ms633506(v=vs.85).aspx) is used to filter non-active-GUI windows.
 
+The assumption here is that what we call a main window must not be owned and must be an active GUI window.
