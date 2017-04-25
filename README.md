@@ -22,3 +22,14 @@ Show every non-owned window of a process.
  SW_SHOWDEFAULT:10
  SW_FORCEMINIMIZE:11
 ```
+
+### What qualifies as a Main Window?
+
+[EnumWindows](https://msdn.microsoft.com/en-us/library/windows/desktop/ms633497(v=vs.85).aspx) is used to enumerate all windows.
+
+[GetWindowThreadProcessId](https://msdn.microsoft.com/en-us/library/windows/desktop/ms633522(v=vs.85).aspx) is used to examine the process ID and thread ID of each window.
+
+If PID matches, [GetWindow](https://msdn.microsoft.com/en-us/library/windows/desktop/ms633515(v=vs.85).aspx) is used to filter any [owned windows](https://msdn.microsoft.com/en-us/library/windows/desktop/ms632599(v=vs.85).aspx#owned_windows).
+
+If window is not owned, [GetGUIThreadInfo](https://msdn.microsoft.com/en-us/library/windows/desktop/ms633506(v=vs.85).aspx) is used to filter non-GUI windows.
+
