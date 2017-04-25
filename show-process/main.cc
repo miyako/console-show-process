@@ -103,9 +103,24 @@ BOOL CALLBACK enumWindowsProc(HWND hWnd, LPARAM lParam)
 	
 	if(process_id == userInfo->process_id)
 	{
-		if(GetWindow(hWnd, GW_OWNER) == (HWND)0) //non-owned
-		{			
-			ShowWindow(hWnd, userInfo->show_option);
+		if(!GetWindow(hWnd, GW_OWNER)) //non-owned
+		{	
+			GUITHREADINFO threadInfo;
+			threadInfo.cbSize = sizeof(GUITHREADINFO);
+
+			if (GetGUIThreadInfo(thread_id, &threadInfo))
+			{
+				if (
+				hWnd == threadInfo.hwndActive ||
+				hWnd == threadInfo.hwndFocus ||
+				hWnd == threadInfo.hwndCapture ||
+				hWnd == threadInfo.hwndMenuOwner ||
+				hWnd == threadInfo.hwndMoveSize ||
+				hWnd == threadInfo.hwndCaret)
+				{
+					ShowWindow(hWnd, userInfo->show_option);
+				}
+			}
 		}
 	}
 	
@@ -147,6 +162,7 @@ int main(int argc, char *argv[])
 	if(h)
 	{
 		EnumWindows(enumWindowsProc, (LPARAM)&userInfo);
+		CloseHandle(h);
 	}
 
 	return 0;
