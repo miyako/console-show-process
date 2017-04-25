@@ -4,7 +4,7 @@
 Usage: show-process -p process {-s option}
 ```
 
-Show every non-owned window of a process.
+Show the "main" window of a process.
 
 ```
  -p process: process id
