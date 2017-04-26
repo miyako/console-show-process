@@ -37,3 +37,4 @@ If window is not owned, [GetClassLongPtr](https://msdn.microsoft.com/en-us/libra
 
 The assumption is that a window with no Background Brush, no Cursor Handle, no Menu,	no Class Style is a helper/message window.
 
+In addition, 4D-specific internal windows are excluded by class name (``Chrome_WidgetWin_0``, ``XTB_WND_PWR_NOTI``).
