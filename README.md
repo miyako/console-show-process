@@ -35,6 +35,6 @@ For example, the IME (Input Method Editor) window is owned.
 
 If window is not owned, [GetClassLongPtr](https://msdn.microsoft.com/en-us/library/windows/desktop/ms633581(v=vs.85).aspx) is used to filter helper/message windows.
 
-The assumption is that a window with no Background Brush, no Cursor Handle, no Menu,	no Class Style is a helper/message window.
+The assumption is that a window with no Background Brush, no Cursor Handle, no Menu,	no Class Style is a helper/message window (obviously not smart).
 
 In addition, 4D-specific internal windows are excluded by class name (``Chrome_WidgetWin_0``, ``XTB_WND_PWR_NOTI``).
