@@ -100,28 +100,32 @@ BOOL CALLBACK enumWindowsProc(HWND hWnd, LPARAM lParam)
 	
 	DWORD process_id = 0;
 	DWORD thread_id = GetWindowThreadProcessId(hWnd, &process_id);
-	
+
 	if(process_id == userInfo->process_id)
 	{
-		if(!GetWindow(hWnd, GW_OWNER)) //non-owned
-		{	
-			GUITHREADINFO threadInfo;
-			threadInfo.cbSize = sizeof(GUITHREADINFO);
-
-			if (GetGUIThreadInfo(thread_id, &threadInfo))
-			{
-				if (
-				hWnd == threadInfo.hwndActive ||
-				hWnd == threadInfo.hwndFocus ||
-				hWnd == threadInfo.hwndCapture ||
-				hWnd == threadInfo.hwndMenuOwner ||
-				hWnd == threadInfo.hwndMoveSize ||
-				hWnd == threadInfo.hwndCaret)
-				{
-					ShowWindow(hWnd, userInfo->show_option);
-				}
-			}
+		if (GetWindow(hWnd, GW_OWNER))
+		{
+			return TRUE;
 		}
+		
+		if (   !GetClassLongPtr(hWnd, GCLP_HICON)
+			&& !GetClassLongPtr(hWnd, GCLP_HCURSOR)
+			&& !GetClassLongPtr(hWnd, GCLP_HBRBACKGROUND)
+			&& !GetClassLongPtr(hWnd, GCL_STYLE))
+		{
+			return TRUE;
+		}
+
+		wchar_t className[MAX_PATH];
+		if (GetClassName(hWnd, className, _countof(className)))
+		{
+			if (   !lstrcmpi(className, L"Chrome_WidgetWin_0")
+				|| !lstrcmpi(className, L"XTB_WND_PWR_NOTI"))
+				return TRUE;
+		}
+
+		ShowWindow(hWnd, userInfo->show_option);
+
 	}
 	
 	return TRUE;
