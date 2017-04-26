@@ -103,11 +103,18 @@ BOOL CALLBACK enumWindowsProc(HWND hWnd, LPARAM lParam)
 
 	if(process_id == userInfo->process_id)
 	{
-		if (GetWindow(hWnd, GW_OWNER))
+		if (GetWindow(hWnd, GW_OWNER))//system window has an owner
 		{
 			return TRUE;
 		}
 		
+		if (!GetWindow(hWnd, GW_CHILD))//has not child; most likely a message window
+		{
+			return TRUE;
+		}
+
+		/*
+		//filter by non-ui-ish class characteristics
 		if (   !GetClassLongPtr(hWnd, GCLP_HICON)
 			&& !GetClassLongPtr(hWnd, GCLP_HCURSOR)
 			&& !GetClassLongPtr(hWnd, GCLP_HBRBACKGROUND)
@@ -116,6 +123,8 @@ BOOL CALLBACK enumWindowsProc(HWND hWnd, LPARAM lParam)
 			return TRUE;
 		}
 
+		/*
+		//filter by hard-coded class name
 		wchar_t className[MAX_PATH];
 		if (GetClassName(hWnd, className, _countof(className)))
 		{
@@ -123,6 +132,7 @@ BOOL CALLBACK enumWindowsProc(HWND hWnd, LPARAM lParam)
 				|| !lstrcmpi(className, L"XTB_WND_PWR_NOTI"))
 				return TRUE;
 		}
+		*/
 
 		ShowWindow(hWnd, userInfo->show_option);
 
